@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Objects;
-
 public class Seat {
 
     private int rowNumber;
@@ -23,7 +21,6 @@ public class Seat {
         this.rowNumber = rowNumber;
     }
 
-
     public int getSeatNumber() {
         return this.seatNumber;
     }
@@ -31,7 +28,6 @@ public class Seat {
     public void setSeatNumber(int seatNumber) {
         this.seatNumber = seatNumber;
     }
-
 
     public String getName() {
         return this.name;
@@ -47,9 +43,9 @@ public class Seat {
         if (!(o instanceof Seat seat)) return false;
         boolean rowNumberEqual = (rowNumber == seat.rowNumber && seatNumber == seat.seatNumber);
 
-        return  rowNumberEqual;
+        return rowNumberEqual;
     }
-    
+
     @Override
     public String toString() {
         return "Seat{" +

@@ -4,39 +4,21 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Cine {
-static Scanner sc = new Scanner(System.in);
-    /*
-    Classe Cine ontindrà els atributs i el mètode d’inicialització.
 
-Atributs:
-Nombre de files del cinema.
-Nombre de seients per cada fila.
-Un objecte de la classe "GestioButaques"
-Un objecte de la classe "GestioCine"
-Mètodes:
-
-Constructor: no rebrà paràmetres. Inicialitzarà l’objecte de la classe "GestioButaques" i "GestioCine".
-Cridarà al mètode "demanarDadesInicials" que inicialitzarà el nombre de files i de seients.
-
-iniciar: començarà l’aplicació. Cridarà al mètode "menu" i en funció del número retornat,
-cridarà al mètode corresponent de la classe "GestioCine".
-
-"demanarDadesInicials": Demanarà a l’usuari/ària el nombre de files i seients
-i els guardarà en els atributs corresponents
-     */
+    static Scanner sc = new Scanner(System.in);
 
     private int totalRow;
     private int totalSeat;
-    private ManageSeat nameManageSeat;       // crear clase y comprobar
-    private ManageCine nameManageCine;        // crear clase y comprobar
+    private ManageSeat seatManager;
+    private ManageCine cineManager;
 
 
     public Cine() {
-        this.nameManageSeat = new ManageSeat();
-        this.nameManageCine = new ManageCine (this); //el propio cine que crea.
-
+        this.seatManager = new ManageSeat();
+        this.cineManager = new ManageCine(this); //el propio cine que crea.
         requestData();
     }
+
 
     public int getTotalRow() {
         return totalRow;
@@ -54,72 +36,77 @@ i els guardarà en els atributs corresponents
         this.totalSeat = totalSeat;
     }
 
-    public ManageSeat getNameManageSeat() {
-        return nameManageSeat;
+    public ManageSeat getSeatManager() {
+        return seatManager;
     }
 
-    public void setNameManageSeat(ManageSeat nameManageSeat) {
-        this.nameManageSeat = nameManageSeat;
+    public void setSeatManager(ManageSeat seatManager) {
+        this.seatManager = seatManager;
     }
 
-    public ManageCine getNameManageCine() {
-        return nameManageCine;
+    public ManageCine getCineManager() {
+        return cineManager;
     }
 
-    public void setNameManageCine(ManageCine nameManageCine) {
-        this.nameManageCine = nameManageCine;
+    public void setCineManager(ManageCine cineManager) {
+        this.cineManager = cineManager;
     }
 
-    public void requestData (){
+    public void requestData() {
         System.out.println("Introduce numero de filas del cine: ");
         int totalRows = sc.nextInt();
         sc.nextLine();
         this.totalRow = totalRows;
 
         System.out.println("Introduce numero de asientos por fila del cine: ");
-        int totalSeats =sc.nextInt();
+        int totalSeats = sc.nextInt();
         sc.nextLine();
         this.totalSeat = totalSeats;
     }
 
-    public void iniciar(){
-        // llamar a metodo menu() que estará en ManageCine.
+    public void start() {
+
         int option;
         do {
-            option = nameManageCine.menu();
-            
+            option = cineManager.menu();
+
             switch (option) {
                 case 0:
                     System.out.println("Adios, gracias por usar el sistema de reservas.");
                     break;
+
                 case 1:
-                    ArrayList<Seat> listDef = nameManageCine.getListSeats();
+                    ArrayList<Seat> listDef = cineManager.getListSeats();
                     if (listDef != null) {
                         for (Seat seat : listDef) {
                             System.out.println(seat.toString());
                         }
                     }
+                    break;
 
-                    break;
                 case 2:
-                    String name = nameManageCine.insertName();
-                   nameManageCine.reservationsClient(name);
+                    String name = cineManager.insertName();
+                    cineManager.showReservationsClient(name);
                     break;
+
                 case 3:
-                    nameManageCine.reservationSeat();
+                    cineManager.reservationSeat();
                     break;
+
                 case 4:
-                    nameManageCine.eliminateReservation();
+                    cineManager.eliminateReservation();
                     break;
+
                 case 5:
-                    nameManageCine.eliminateAllReservation();
+                    cineManager.eliminateAllReservation();
                     break;
+
                 default:
-                    System.out.println("Opcion incorrecta");
+                    System.out.println("Opción incorrecta\n");
 
             }
-            System.out.println();
-        }while (option !=0);
+
+        } while (option != 0);
     }
 
 }

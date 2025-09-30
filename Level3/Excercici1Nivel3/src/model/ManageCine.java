@@ -13,7 +13,7 @@ public class ManageCine {
         this.cineNew = cineNew;
     }
 
-    public int menu(){
+    public int menu() {
         System.out.println("***MENU GESTIÓN*** \n\n" +
                 "1.- Mostrar totes les butaques reservades.\n" +
                 "2.- Mostrar les butaques reservades per una persona.\n" +
@@ -26,27 +26,24 @@ public class ManageCine {
         return option;
     }
 
-  // getButaques: Retornarà l’atribut butaques.
 
     public ArrayList<Seat> getListSeats() {
 
-        return cineNew.getNameManageSeat().getListSeat();
+        return cineNew.getSeatManager().getListSeat();
     }
 
-  //reservar
 
-    public void reservationSeat (){
+    public void reservationSeat() {
         int row = insertRow();
-        int seat = insertSeat ();
+        int seat = insertSeat();
         String name = insertName();
-        Seat newSeat = new Seat (row,seat,name);
-        cineNew.getNameManageSeat().addSeat(newSeat);
+        Seat newSeat = new Seat(row, seat, name);
+        cineNew.getSeatManager().addSeat(newSeat);
     }
 
 
-
-    public int insertRow (){
-        int row =-1;
+    public int insertRow() {
+        int row = -1;
         boolean validation = false;
         while (!validation) {
             System.out.println("Inserta la FILA del asiento: ");
@@ -66,8 +63,8 @@ public class ManageCine {
         return row;
     }
 
-    public int insertSeat (){
-        int seat =-1;
+    public int insertSeat() {
+        int seat = -1;
         boolean validation = false;
         while (!validation) {
             System.out.println("Inserta el NUMERO del asiento: ");
@@ -91,8 +88,8 @@ public class ManageCine {
     public String insertName() {
         boolean validation = false;
         String name;
-        do{
-            System.out.println ("Inserta el NOMBRE: ");
+        do {
+            System.out.println("Inserta el NOMBRE: ");
             name = sc.nextLine();
             try {
 
@@ -107,48 +104,35 @@ public class ManageCine {
             } catch (ExceptionWrongName error) {
                 System.out.println(error.getMessage());
             }
-        }while (!validation);
+        } while (!validation);
         return name;
     }
 
-//ver reserva cliente
 
-public void reservationsClient(String name) {
+    public void showReservationsClient(String name) {
         boolean found = false;
-    for (Seat seat : cineNew.getNameManageSeat().getListSeat()) {
-        if (seat.getName().equalsIgnoreCase(name)) {
-            System.out.println(seat.toString());
-            found = true;
+        for (Seat seat : cineNew.getSeatManager().getListSeat()) {
+            if (seat.getName().equalsIgnoreCase(name)) {
+                System.out.println(seat.toString());
+                found = true;
+            }
         }
+        if (!found) {
+            System.out.println("No hay reservas con este nombre");
         }
-        if (!found){
-        System.out.println("no hay reservas con este nombre");
     }
-
-}
-
-/*
-"anularReserva": Demana a l’usuari/ària un número de fila (crida al mètode "introduirFila"),
- un número de seient (crida al mètode "introduirSeient") i elimina la reserva de la butaca.
- */
-
 
     public void eliminateReservation() {
-        int row =insertRow();
+        int row = insertRow();
         int seat = insertSeat();
-        cineNew.getNameManageSeat().deleteSeat(row,seat);
+        cineNew.getSeatManager().deleteSeat(row, seat);
     }
 
 
-/*
-"anularReservaPersona": Demana a l’usuari/ària el nom de la persona (crida al mètode "introduirPersona")
- i elimina les butaques reservades per la persona introduïda.
- */
-
-public void eliminateAllReservation() {
-    String name = insertName();
-    cineNew.getNameManageSeat().deleteAllSeat(name);
-}
+    public void eliminateAllReservation() {
+        String name = insertName();
+        cineNew.getSeatManager().deleteAllSeat(name);
+    }
 
 }
 
