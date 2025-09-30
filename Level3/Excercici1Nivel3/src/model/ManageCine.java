@@ -1,0 +1,155 @@
+package model;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class ManageCine {
+
+    static Scanner sc = new Scanner(System.in);
+
+    private Cine cineNew;
+
+    public ManageCine(Cine cineNew) {
+        this.cineNew = cineNew;
+    }
+
+    public int menu(){
+        System.out.println("***MENU GESTIÓN*** \n\n" +
+                "1.- Mostrar totes les butaques reservades.\n" +
+                "2.- Mostrar les butaques reservades per una persona.\n" +
+                "3.- Reservar una butaca.\n" +
+                "4.- Anul·lar la reserva d’una butaca.\n" +
+                "5.- Anul·lar totes les reserves d’una persona.\n" +
+                "0.- Sortir.");
+        int option = sc.nextInt();
+        sc.nextLine();
+        return option;
+    }
+
+  // getButaques: Retornarà l’atribut butaques.
+
+    public ArrayList<Seat> getListSeats() {
+
+        return cineNew.getNameManageSeat().getListSeat();
+    }
+
+  //reservar
+
+    public void reservationSeat (){
+        int row = insertRow();
+        int seat = insertSeat ();
+        String name = insertName();
+        Seat newSeat = new Seat (row,seat,name);
+        cineNew.getNameManageSeat().addSeat(newSeat);
+    }
+
+
+
+    public int insertRow (){
+        int row =-1;
+        boolean validation = false;
+        while (!validation) {
+            System.out.println("Inserta la FILA del asiento: ");
+            try {
+                row = sc.nextInt();
+
+                if ((row < 1) || (row > cineNew.getTotalRow())) {
+                    throw new ExceptionWrongRow("Fila incorrecta!");
+                } else {
+                    System.out.println("Fila correcta.");
+                    validation = true;
+                }
+            } catch (ExceptionWrongRow error) {
+                System.out.println(error.getMessage());
+            }
+        }
+        return row;
+    }
+
+    public int insertSeat (){
+        int seat =-1;
+        boolean validation = false;
+        while (!validation) {
+            System.out.println("Inserta el NUMERO del asiento: ");
+            try {
+                seat = sc.nextInt();
+                sc.nextLine();
+
+                if ((seat < 1) || (seat > cineNew.getTotalSeat())) {
+                    throw new ExceptionWrongSeat("Asiento incorrecto!");
+                } else {
+                    System.out.println("Asiento correcto.");
+                    validation = true;
+                }
+            } catch (ExceptionWrongSeat error) {
+                System.out.println(error.getMessage());
+            }
+        }
+        return seat;
+    }
+
+    public String insertName() {
+        boolean validation = false;
+        String name;
+        do{
+            System.out.println ("Inserta el NOMBRE: ");
+            name = sc.nextLine();
+            try {
+
+                for (int i = 0; i < name.length(); i++) {
+                    if (Character.isDigit(name.charAt(i))) {
+                        throw new ExceptionWrongName("Nombre equivocado!");
+                    }
+                }
+                validation = true;
+                System.out.println("Nombre correcto");
+
+            } catch (ExceptionWrongName error) {
+                System.out.println(error.getMessage());
+            }
+        }while (!validation);
+        return name;
+    }
+
+//ver reserva cliente
+
+public void reservationsClient(String name) {
+        boolean found = false;
+    for (Seat seat : cineNew.getNameManageSeat().getListSeat()) {
+        if (seat.getName().equalsIgnoreCase(name)) {
+            System.out.println(seat.toString());
+            found = true;
+        }
+        }
+        if (!found){
+        System.out.println("no hay reservas con este nombre");
+    }
+
+}
+
+/*
+"anularReserva": Demana a l’usuari/ària un número de fila (crida al mètode "introduirFila"),
+ un número de seient (crida al mètode "introduirSeient") i elimina la reserva de la butaca.
+ */
+
+
+    public void eliminateReservation() {
+        int row =insertRow();
+        int seat = insertSeat();
+        cineNew.getNameManageSeat().deleteSeat(row,seat);
+    }
+
+
+/*
+"anularReservaPersona": Demana a l’usuari/ària el nom de la persona (crida al mètode "introduirPersona")
+ i elimina les butaques reservades per la persona introduïda.
+ */
+
+public void eliminateAllReservation() {
+    String name = insertName();
+    cineNew.getNameManageSeat().deleteAllSeat(name);
+}
+
+}
+
+

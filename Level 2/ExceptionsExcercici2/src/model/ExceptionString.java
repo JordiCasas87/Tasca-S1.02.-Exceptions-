@@ -1,0 +1,8 @@
+package model;
+
+public class ExceptionString extends Exception{
+
+    public ExceptionString (String message){
+        super(message);
+    }
+}
