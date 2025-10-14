@@ -1,7 +1,6 @@
 package main;
 
 import model.Entry;
-import java.util.Scanner;
 
 public class MainTest {
 

@@ -1,5 +1,9 @@
 package model;
 
+import exceptions.ExceptionBoolean;
+import exceptions.ExceptionChar;
+import exceptions.ExceptionString;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -125,7 +129,7 @@ public class Entry {
                 answer= sc.next().charAt(0);
 
                 if ((answer !='s')&&(answer!='n')){
-                    throw new ExceptionBoolean ("Error en la eleccion (si/no)");
+                    throw new ExceptionBoolean("Error en la eleccion (si/no)");
                 }
                 decition = true;
             } catch (ExceptionBoolean e) {
