@@ -1,6 +1,6 @@
 package Main;
 
-import java.util.ArrayList;
+import exceptions.EmptySaleException;
 import model.Product;
 import model.Sale;
 
@@ -10,24 +10,40 @@ public class Main {
         Product fruit = new Product("Pineaple", 5);
         Product fruit1 = new Product("Melon", 4);
 
+
+
         Sale sale1 = new Sale();
+
+        try {
+            int emptyTotal = sale1.calculateTotal();
+        }catch (EmptySaleException e){
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println();
+
         sale1.setProductList(fruit);
         sale1.setProductList(fruit1);
 
-        //ArrayList<Product> listSale = sale1.getProductList();
-        int total = sale1.calculateTotal();
-        if (total != -1) {
+
+        try {
+            int total = sale1.calculateTotal();
             System.out.println("El total de la venta es: " + total + "€");
+
+        } catch (EmptySaleException e) {
+            System.out.println(e.getMessage());
         }
 
-        // Check that the total is added correctly.s.
         Product fruit2 = new Product("Apple", 3);
         sale1.setProductList(fruit2);
 
-        total = sale1.calculateTotal();
-        if (total != -1) {
+        try {
+            int total = sale1.calculateTotal();
             System.out.println("El total de la venta es: " + total + "€");
 
+
+        } catch (EmptySaleException e) {
+            System.out.println(e.getMessage());
         }
     }
 }
