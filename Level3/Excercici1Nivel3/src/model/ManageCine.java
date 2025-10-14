@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ManageCine {
@@ -14,17 +15,29 @@ public class ManageCine {
     }
 
     public int menu() {
-        System.out.println("***MENU GESTIÓN*** \n\n" +
-                "1.- Mostrar totes les butaques reservades.\n" +
-                "2.- Mostrar les butaques reservades per una persona.\n" +
-                "3.- Reservar una butaca.\n" +
-                "4.- Anul·lar la reserva d’una butaca.\n" +
-                "5.- Anul·lar totes les reserves d’una persona.\n" +
-                "0.- Sortir.");
-        int option = sc.nextInt();
-        sc.nextLine();
+        int option=-1;
+        try {
+            System.out.println("***MENU GESTIÓN*** \n\n" +
+                    "1.- Mostrar totes les butaques reservades.\n" +
+                    "2.- Mostrar les butaques reservades per una persona.\n" +
+                    "3.- Reservar una butaca.\n" +
+                    "4.- Anul·lar la reserva d’una butaca.\n" +
+                    "5.- Anul·lar totes les reserves d’una persona.\n" +
+                    "0.- Sortir.");
+            option = sc.nextInt();
+            sc.nextLine();
+
+
+
+        } catch (InputMismatchException e) {
+            System.out.println("debe ser un numero entre 1 y 5!");
+            sc.nextLine();
+            }
+
         return option;
     }
+
+
 
 
     public ArrayList<Seat> getListSeats() {

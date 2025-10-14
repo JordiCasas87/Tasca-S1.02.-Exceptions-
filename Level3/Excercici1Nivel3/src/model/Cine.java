@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Cine {
@@ -53,64 +54,55 @@ public class Cine {
     }
 
     public void requestData() {
-        System.out.println("Introduce numero de filas del cine: ");
-        int totalRows = sc.nextInt();
-        sc.nextLine();
-        this.totalRow = totalRows;
+        boolean validation = false;
+        while (!validation) {
+            try {
 
-        System.out.println("Introduce numero de asientos por fila del cine: ");
-        int totalSeats = sc.nextInt();
-        sc.nextLine();
-        this.totalSeat = totalSeats;
-    }
+                System.out.println("Introduce numero de filas del cine: ");
+                int totalRows = sc.nextInt();
 
-    public void start() {
+                if (totalRows <= 0) {
+                    throw new ExceptionWrongRow("Error, numero de debe ser mayor de 0");
+                } else {
+                    this.totalRow = totalRows;
+                    validation = true;
+                }
 
-        int option;
-        do {
-            option = cineManager.menu();
-
-            switch (option) {
-                case 0:
-                    System.out.println("Adios, gracias por usar el sistema de reservas.");
-                    break;
-
-                case 1:
-                    ArrayList<Seat> listDef = cineManager.getListSeats();
-                    if (listDef != null) {
-                        for (Seat seat : listDef) {
-                            System.out.println(seat.toString());
-                        }
-                    }
-                    break;
-
-                case 2:
-                    String name = cineManager.insertName();
-                    cineManager.showReservationsClient(name);
-                    break;
-
-                case 3:
-                    cineManager.reservationSeat();
-                    break;
-
-                case 4:
-                    cineManager.eliminateReservation();
-                    break;
-
-                case 5:
-                    cineManager.eliminateAllReservation();
-                    break;
-
-                default:
-                    System.out.println("Opción incorrecta\n");
-
+            } catch (ExceptionWrongRow e) {
+                System.out.println(e.getMessage());
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println(e.getMessage());
+                sc.nextLine();
             }
+        }
+        validation = false;
 
-        } while (option != 0);
+        while (!validation) {
+
+            try {
+
+                System.out.println("Introduce numero de asientos por fila del cine: ");
+                int totalSeats = sc.nextInt();
+
+                if (totalSeats <= 0) {
+                    throw new ExceptionWrongSeat("Error, numero de debe ser mayor de 0");
+                } else {
+                    this.totalSeat = totalSeats;
+                    validation = true;
+                }
+
+            } catch (ExceptionWrongSeat e) {
+                System.out.println(e.getMessage());
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Error, debe ser un numero");
+                System.out.println(e.getMessage());
+            }
+        }
+
     }
-
 }
-
 
 
 
